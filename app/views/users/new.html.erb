@@ -1,4 +1,15 @@
-<div>
-  <h1 class="font-bold text-4xl">Users#new</h1>
-  <p>Find me in app/views/users/new.html.erb</p>
+<div class="h-screen content-center space-y-5 max-w-lg mx-auto">
+  <h1 class="font-bold text-4xl text-center">Create an account</h1>
+  <form class="flex flex-col gap-5">
+    <section class="flex flex-col gap-1">
+      <label for="username">Username</label>
+      <input id="username" type="text" name="user[username]" placeholder="Username" />
+    </section>
+    <section class="flex flex-col gap-1">
+      <label for="password">Password</label>
+      <input id="password" type="password" name="user[password]" placeholder="Password" />
+    </section>
+
+    <button type="submit" class="bg-slate-800 text-white text-lg font-bold py-2 rounded-md">Create account</button>
+  </form>
 </div>
