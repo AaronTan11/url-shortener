@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
-  root 'users#new'
+  root 'pages#index'
 
-  get 'sessions/new'
-  get 'sessions/create'
-  get 'users/new'
-  get 'users/create'
+  get 'signup', to: 'users#new', as: 'signup'
+  get 'login', to: 'sessions#new', as: 'login'
+  # post 'login', to: 'sessions#create'
+  # delete 'logout', to: 'sessions#destroy', as: 'logout'
+
+  resources :users, only: %i[new create]
 end
