@@ -70,3 +70,8 @@ group :test do
 end
 
 
+# Adding bcrypt for password encryption
+gem 'bcrypt'
+
+# Adding rubocop for code quality / linting
+gem 'rubocop', require: false
