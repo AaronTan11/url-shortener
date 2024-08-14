@@ -1,0 +1,2 @@
+class TargetUrl < ApplicationRecord
+end
