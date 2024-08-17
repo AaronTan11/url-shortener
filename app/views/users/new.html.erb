@@ -1,15 +1,27 @@
 <div class="h-screen content-center space-y-5 max-w-lg mx-auto">
   <h1 class="font-bold text-4xl text-center">Create an account</h1>
-  <form class="flex flex-col gap-5">
+  <%= form_with(model: @user, local: true, class: "flex flex-col gap-5") do |form| %>
+    <% if @user.errors.any? %>
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Error!</strong>
+        <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
     <section class="flex flex-col gap-1">
-      <label for="username">Username</label>
-      <input id="username" type="text" name="user[username]" placeholder="Username" />
-    </section>
-    <section class="flex flex-col gap-1">
-      <label for="password">Password</label>
-      <input id="password" type="password" name="user[password]" placeholder="Password" />
+      <%= form.label :username, class: "text-gray-700" %>
+      <%= form.text_field :username, placeholder: "Username", class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
     </section>
 
-    <button type="submit" class="bg-slate-800 text-white text-lg font-bold py-2 rounded-md">Create account</button>
-  </form>
+    <section class="flex flex-col gap-1">
+      <%= form.label :password, class: "text-gray-700" %>
+      <%= form.password_field :password, placeholder: "Password", class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
+    </section>
+
+    <%= form.submit "Create account", class: "bg-slate-800 text-white text-lg font-bold py-2 rounded-md cursor-pointer hover:bg-slate-700" %>
+  <% end %>
 </div>
