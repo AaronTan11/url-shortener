@@ -97,12 +97,16 @@ GEM
     concurrent-ruby (1.3.4)
     connection_pool (2.4.1)
     crass (1.0.6)
+    csv (3.3.0)
     date (3.3.4)
     debug (1.9.2)
       irb (~> 1.10)
       reline (>= 0.3.8)
     drb (2.2.1)
     erubi (1.13.0)
+    geocoder (1.8.3)
+      base64 (>= 0.1.0)
+      csv (>= 3.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.5)
@@ -157,6 +161,10 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
+    open-uri (0.4.1)
+      stringio
+      time
+      uri
     parallel (1.26.2)
     parser (3.3.4.2)
       ast (~> 2.4.1)
@@ -264,6 +272,8 @@ GEM
     tailwindcss-rails (2.7.2-x86_64-linux)
       railties (>= 7.0.0)
     thor (1.3.1)
+    time (0.3.0)
+      date
     timeout (0.4.1)
     turbo-rails (2.0.6)
       actionpack (>= 6.0.0)
@@ -272,6 +282,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
+    uri (0.13.0)
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -299,8 +310,11 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  geocoder
   importmap-rails
   jbuilder
+  nokogiri
+  open-uri
   puma (>= 5.0)
   rails (~> 7.1.3, >= 7.1.3.4)
   rubocop
