@@ -3,9 +3,12 @@ Rails.application.routes.draw do
 
   get 'signup', to: 'users#new', as: 'signup'
   get 'login', to: 'sessions#new', as: 'login'
-  get 'short-urls', to: 'short_urls#index', as: 'short_urls'
   post 'login', to: 'sessions#create'
-  # delete 'logout', to: 'sessions#destroy', as: 'logout'
+  delete 'logout', to: 'sessions#destroy'
 
   resources :users, only: %i[new create]
+  resources :short_urls, only: %i[index new create show]
+
+  get '/:id', to: 'short_urls#redirect', as: 'short'
+  get '/short_urls/:id/report', to: 'short_urls#show', as: 'short_url_report'
 end

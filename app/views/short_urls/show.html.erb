@@ -1,4 +1,52 @@
-<div>
-  <h1 class="font-bold text-4xl">ShortUrls#show</h1>
-  <p>Find me in app/views/short_urls/show.html.erb</p>
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6">Short URL Analytics</h1>
+
+  <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="original-url">
+        Original URL
+      </label>
+      <p class="text-gray-600 break-all" id="original-url"><%= @short_url.target_url.target_url %></p>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="short-url">
+        Short URL
+      </label>
+      <p class="text-blue-600 break-all" id="short-url"><%= short_url(@short_url.path) %></p>
+    </div>
+  </div>
+
+  <h2 class="text-2xl font-bold mb-4">Click Analytics</h2>
+
+  <% if @analytics.any? %>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="py-2 px-4 text-left">Clicked At</th>
+            <th class="py-2 px-4 text-left">IP Address</th>
+            <th class="py-2 px-4 text-left">Country</th>
+            <th class="py-2 px-4 text-left">City</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @analytics.each do |analytic| %>
+            <tr class="border-b">
+              <td class="py-2 px-4"><%= analytic.clicked_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+              <td class="py-2 px-4"><%= analytic.ip_address %></td>
+              <td class="py-2 px-4"><%= analytic.country %></td>
+              <td class="py-2 px-4"><%= analytic.city %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p class="text-gray-600">No clicks recorded yet.</p>
+  <% end %>
+
+  <div class="mt-6 flex space-x-4">
+    <%= link_to "Create Another", new_short_url_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+    <%= link_to "View All", short_urls_path, class: "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" %>
+  </div>
 </div>

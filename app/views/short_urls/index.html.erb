@@ -1,24 +1,39 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6">All Short URLs</h1>
 
-  <div class="overflow-x-auto">
-    <div class="inline-block min-w-full py-2">
-      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-35 ring-offset-1 md:rounded-lg">
-        <table class="min-w-full divide-y divide-gray-300">
-          <thead class="bg-gray-50">
-            <tr>
-              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Target URL</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Title Tag</th>
-              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Short URL</th>
+  <% if @target_urls.any? %>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="py-2 px-4 text-left">Original URL</th>
+            <th class="py-2 px-4 text-left">Short URLs</th>
+            <th class="py-2 px-4 text-left">Title</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @target_urls.each do |target_url| %>
+            <tr class="border-b">
+              <td class="py-2 px-4"><%= target_url.target_url %></td>
+              <td class="py-2 px-4">
+                <% target_url.short_urls.each do |short_url| %>
+                  <div>
+                  <%= link_to short_url(short_url.path), short_url(short_url.path), class: "text-blue-500 hover:underline" %>
+                  <%= link_to "View Analytics", short_url_report_path(short_url.path), class: "text-green-500 hover:underline ml-2" %>
+                  </div>
+                <% end %>
+              </td>
+              <td class="py-2 px-4"><%= target_url.title_tag %></td>
             </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200 bg-white">
-            <tr>
-              <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">https://example.com</td>
-              <td class="px-3 py-4 text-sm text-gray-500">Example Site</td>
-              <td class="px-3 py-4 text-sm text-gray-500"><span class="px-3 py-2 rounded-lg bg-slate-500 text-white ">abc123</span></td>
-            </tr>
-            <!-- More rows... -->
-          </tbody>
-        </table>
-      </div>
+          <% end %>
+        </tbody>
+      </table>
     </div>
+  <% else %>
+    <p class="text-gray-600">No short URLs have been created yet.</p>
+  <% end %>
+
+  <div class="mt-6">
+    <%= link_to "Create New Short URL", new_short_url_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
   </div>
+</div>

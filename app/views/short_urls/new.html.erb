@@ -1,4 +1,22 @@
-<div>
-  <h1 class="font-bold text-4xl">ShortUrls#new</h1>
-  <p>Find me in app/views/short_urls/new.html.erb</p>
+<div class="h-screen content-center space-y-5 max-w-lg mx-auto">
+  <h1 class="font-bold text-4xl text-center">Create Short URL</h1>
+  <%= form_with(model: @short_url, local: true, class: "flex flex-col gap-5") do |form| %>
+  <% if @short_url.errors.any? %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <strong class="font-bold">Error!</strong>
+      <ul>
+        <% @short_url.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <section class="flex flex-col gap-1">
+    <%= form.label :target_url, "Target URL", class: "text-gray-700" %>
+    <%= form.url_field :target_url, placeholder: "https://example.com", class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" %>
+  </section>
+
+  <%= form.submit "Create Short URL", class: "bg-slate-800 text-white text-lg font-bold py-2 rounded-md cursor-pointer hover:bg-slate-700" %>
+<% end %>
 </div>
