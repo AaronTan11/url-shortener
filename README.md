@@ -17,14 +17,14 @@ This project uses the following gems and libraries:
 - Tailwind CSS for styling
 - `bcrypt` for secure password hashing
 - `nokogiri` for parsing HTML (used for scraping title tags)
-- `geocoder` for getting visitors'\*\*\*\* geolocation
+- `geocoder` for getting visitors' geolocation
 
 ## Configuration
 
 1. Clone the repository:
 
    ```
-   git clone https://github.com/your-username/url-shortener.git
+   git clone https://github.com/AaronTan11/url-shortener.git
    cd url-shortener
    ```
 
@@ -40,7 +40,6 @@ This project uses the following gems and libraries:
 
 4. Create and initialize the database:
    ```
-   rails db:create
    rails db:migrate
    ```
 
