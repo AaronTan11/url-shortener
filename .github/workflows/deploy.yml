@@ -21,7 +21,7 @@ jobs:
             git pull origin main &&
             bundle install --without development test &&
             RAILS_ENV=production bundle exec rails db:migrate &&
-          RAILS_ENV=production bundle exec rails assets:precompile &&
-          sudo -E RAILS_ENV=production SECRET_KEY_BASE=$(bundle exec rails secret) bundle exec rails server -b 0.0.0.0 -p 80 -d
+            mkdir -p tmp/pids tmp/sockets log &&
+            RAILS_ENV=production bundle exec puma -C config/puma.rb -d
             echo "Deployment completed successfully"
           '
