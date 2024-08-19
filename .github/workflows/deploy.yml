@@ -34,4 +34,5 @@ jobs:
             cd url-shortener &&
             git pull origin main &&
             bundle install 
+            echo "Deployment completed successfully"
           '
