@@ -9,20 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.3.0
-
-      - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle install
-
-      #   - name: Run tests
-      #     run: bundle exec rails test
-
       - name: Deploy to EC2
         env:
           PRIVATE_KEY: ${{ secrets.EC2_PRIVATE_KEY }}
@@ -33,6 +19,9 @@ jobs:
           ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} '
             cd url-shortener &&
             git pull origin main &&
-            bundle install 
+            bundle install --without development test &&
+            RAILS_ENV=production bundle exec rails db:migrate &&
+          RAILS_ENV=production bundle exec rails assets:precompile &&
+          sudo -E RAILS_ENV=production SECRET_KEY_BASE=$(bundle exec rails secret) bundle exec rails server -b 0.0.0.0 -p 80 -d
             echo "Deployment completed successfully"
           '
