@@ -19,9 +19,9 @@ jobs:
           ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} '
             cd url-shortener &&
             git pull origin main &&
-            bundle install --without development test &&
-            RAILS_ENV=production bundle exec rails db:migrate &&
             mkdir -p tmp/pids tmp/sockets log &&
-            RAILS_ENV=production bundle exec puma -C config/puma.rb -d
+            RAILS_ENV=production bundle exec rails db:migrate &&
+            RAILS_ENV=production bundle exec rails assets:precompile &&
+            RAILS_ENV=production bundle exec rails server -d
             echo "Deployment completed successfully"
           '
