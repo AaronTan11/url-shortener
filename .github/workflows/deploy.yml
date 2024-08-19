@@ -29,12 +29,9 @@ jobs:
           HOST: ${{ secrets.EC2_HOST }}
           USER: ${{ secrets.EC2_USER }}
         run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} '
-            cd ~/url_shortener &&
+          echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
+          ssh -i private_key ${USER}@${HOST} '
+            cd url-shortener &&
             git pull origin main &&
-            bundle install &&
-            RAILS_ENV=production bundle exec rails db:migrate &&
-            RAILS_ENV=production bundle exec rails assets:precompile &&
-            sudo systemctl restart puma
+            bundle install 
           '
