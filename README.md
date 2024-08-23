@@ -102,3 +102,6 @@ The short URL path solution generates alphanumeric strings between 6 and 10 char
 > [!NOTE]
 > The url shortening process might take some time, if clicking once does not work, try clicking multiple times.
 > There is no error to this as it saves to SQLITE db just fine.
+
+> [!NOTE]
+> In case you are wondering why there is more commits, I was just trying to play with channels, trying to implement real-time updates for the analytics. But it is removed now as it caused errors to deployment.
