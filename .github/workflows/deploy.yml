@@ -20,7 +20,7 @@ jobs:
           ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} '
             cd url-shortener &&
             git pull origin main &&
-            sudo docker stop &&
+            sudo docker stop app &&
             sudo docker build -t app . &&
             sudo docker run --rm -d -v app-storage:/rails/storage -p 3000:3000 --env RAILS_MASTER_KEY=${{secrets.RAILS_MASTER_KEY}} app
           '
