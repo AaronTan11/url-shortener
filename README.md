@@ -98,3 +98,7 @@ The short URL path solution generates alphanumeric strings between 6 and 10 char
 
 - Implement custom path creation for premium users.
 - Add support for real-time analytics updates (currently removed due to causing deployment errors)
+
+> [!NOTE]
+> The url shortening process might take some time, if clicking once does not work, try clicking multiple times.
+> There is no error to this as it saves to SQLITE db just fine.
