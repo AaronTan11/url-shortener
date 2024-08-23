@@ -77,9 +77,6 @@ class ShortUrlsController < ApplicationController
       clicked_at: Time.current
     )
 
-    # Broadcast the analytic to the analytics channel
-    AnalyticsChannel.broadcast_to(@short_url, analytic)
-
     Rails.logger.debug "Created analytic: #{analytic.inspect}"
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error "Failed to create analytic: #{e.message}"
