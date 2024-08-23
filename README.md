@@ -68,3 +68,33 @@ rails test
 - Redirection from short URLs to original URLs
 - Analytics for each short URL (clicks, locations)
 - User dashboard to manage and view analytics for their short URLs
+
+# Deployed Application
+
+To view the deployed app please click this link:
+https://rails.tanweihup.dev/
+
+## Short URL Path Solution
+
+The short URL path solution generates alphanumeric strings between 6 and 10 characters long.
+
+### Implementation
+
+- `SecureRandom.alphanumeric(rand(6..10))` is used to generate random strings.
+- The length is randomly chosen between 6 and 10 characters for each URL.
+- To ensure uniqueness, I did checking against existing paths in the database.
+
+### Limitations
+
+1. Collision probability increases as more URLs are generated.
+2. The random length might not be optimal for all use cases.
+
+### Workarounds
+
+1. If collisions become frequent, we could implement a retry mechanism with an increasing length.
+2. For high-volume systems, we could consider using a deterministic algorithm or a distributed ID generator.
+
+### Future Improvements
+
+- Implement custom path creation for premium users.
+- Add support for real-time analytics updates (currently removed due to causing deployment errors)
