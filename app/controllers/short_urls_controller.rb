@@ -2,7 +2,7 @@ class ShortUrlsController < ApplicationController
   before_action :authenticate_user!, except: [:redirect]
 
   def index
-    @target_urls = TargetUrl.includes(:short_urls).all
+    @target_urls = current_user.target_urls.includes(:short_urls).order(created_at: :desc)
   end
 
   def new
@@ -10,14 +10,15 @@ class ShortUrlsController < ApplicationController
   end
 
   def create
-    target_url = TargetUrl.find_or_initialize_by(target_url: short_url_params[:target_url])
-    target_url.update(title_tag: get_title_tag(target_url.target_url))
+    target_url = current_user.target_urls.find_or_initialize_by(target_url: short_url_params[:target_url])
+    target_url.title_tag = get_title_tag(target_url.target_url) if target_url.new_record?
 
-    @short_url = ShortUrl.new(path: generate_unique_path, target_url:)
+    @short_url = target_url.short_urls.new(path: generate_unique_path)
 
-    if @short_url.save
+    if target_url.save && @short_url.save
       redirect_to short_urls_path, notice: 'Short URL was successfully created.'
     else
+      flash.now[:alert] = 'Failed to create Short URL.'
       render :new
     end
   end
@@ -25,9 +26,10 @@ class ShortUrlsController < ApplicationController
   def show
     @short_url = ShortUrl.find_by(path: params[:id])
     if @short_url
-      @analytics = @short_url.analytics.order(clicked_at: :desc)
-      Rails.logger.debug "Analytics count: #{@analytics.count}"
-      Rails.logger.debug "First analytic: #{@analytics.first.inspect}" if @analytics.any?
+      @analytics = @short_url.analytics.order(clicked_at: :desc).includes(:short_url)
+      @total_clicks = @analytics.count
+      @unique_visitors = @analytics.pluck(:ip_address).uniq.count
+      @top_country = @analytics.group(:country).count.max_by { |_, v| v }&.first || 'N/A'
     else
       render :not_found, status: :not_found
     end
@@ -72,6 +74,10 @@ class ShortUrlsController < ApplicationController
       city: location.city,
       clicked_at: Time.current
     )
+
+    # Broadcast the analytic to the analytics channel
+    AnalyticsChannel.broadcast_to(@short_url, analytic)
+
     Rails.logger.debug "Created analytic: #{analytic.inspect}"
   rescue ActiveRecord::RecordInvalid => e
     Rails.logger.error "Failed to create analytic: #{e.message}"

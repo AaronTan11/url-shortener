@@ -16,11 +16,27 @@
     </div>
   </div>
 
+  <h2 class="text-2xl font-bold mb-4">Usage Statistics</h2>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+    <div class="bg-white shadow-md rounded px-8 py-6">
+      <h3 class="text-xl font-bold mb-2">Total Clicks</h3>
+      <p class="text-3xl font-bold text-blue-600" id="total-clicks"><%= @analytics.count %></p>
+    </div>
+    <div class="bg-white shadow-md rounded px-8 py-6">
+      <h3 class="text-xl font-bold mb-2">Unique Visitors</h3>
+      <p class="text-3xl font-bold text-green-600" id="unique-visitors"><%= @analytics.pluck(:ip_address).uniq.count %></p>
+    </div>
+    <div class="bg-white shadow-md rounded px-8 py-6">
+      <h3 class="text-xl font-bold mb-2">Top Country</h3>
+      <p class="text-3xl font-bold text-purple-600" id="top-country"><%= @analytics.group(:country).count.max_by { |_, v| v }&.first || 'N/A' %></p>
+    </div>
+  </div>
+
   <h2 class="text-2xl font-bold mb-4">Click Analytics</h2>
 
   <% if @analytics.any? %>
     <div class="overflow-x-auto">
-      <table class="min-w-full bg-white">
+      <table class="min-w-full bg-white" id="analytics-table" data-path="<%= @short_url.path %>">
         <thead class="bg-gray-100">
           <tr>
             <th class="py-2 px-4 text-left">Clicked At</th>
@@ -34,8 +50,8 @@
             <tr class="border-b">
               <td class="py-2 px-4"><%= analytic.clicked_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
               <td class="py-2 px-4"><%= analytic.ip_address %></td>
-              <td class="py-2 px-4"><%= analytic.country %></td>
-              <td class="py-2 px-4"><%= analytic.city %></td>
+              <td class="py-2 px-4"><%= analytic.country || 'Unknown' %></td>
+              <td class="py-2 px-4"><%= analytic.city || 'Unknown' %></td>
             </tr>
           <% end %>
         </tbody>

@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :redirect_if_logged_in, only: %i[new create]
+
   def new
   end
 
@@ -9,7 +11,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to short_urls_path
     else
-      flash[:error] = 'Invalid username or password'
+      flash.now[:error] = 'Invalid username or password'
       render :new
     end
   end
@@ -17,5 +19,11 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     redirect_to login_path, notice: 'You are logged out!'
+  end
+
+  private
+
+  def redirect_if_logged_in
+    redirect_to short_urls_path if current_user
   end
 end
