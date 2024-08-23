@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 class PagesController < ApplicationController
   before_action :redirect_if_logged_in, only: %i[index]
 
-  def index
-  end
+  def index; end
 
   private
 

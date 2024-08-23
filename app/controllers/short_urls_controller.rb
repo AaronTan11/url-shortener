@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ShortUrlsController < ApplicationController
   before_action :authenticate_user!, except: [:redirect]
 
