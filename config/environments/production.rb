@@ -91,7 +91,8 @@ Rails.application.configure do
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   config.hosts = [
-    'rails.tanweihup.dev' # Allow requests from example.com
+    'rails.tanweihup.dev', # Allow requests from example.com
+    '52.74.60.162'
   ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
